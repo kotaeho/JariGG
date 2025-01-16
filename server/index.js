@@ -169,10 +169,10 @@ io.on('connection', socket => {
 
 // === OAuth2 디스코드 인증 ===
 
-app.use(express.static(path.join('D:', 'React', 'dist'))) // 로컬 경로로 수정
+app.use(express.static(path.join(__dirname, 'JariGG', 'dist'))) // 'JariGG/dist' 경로로 수정
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join('D:', 'React', 'dist', 'index.html')) // 로컬 경로로 수정
+  res.sendFile(path.join(__dirname, 'JariGG', 'dist', 'index.html')) // 'JariGG/dist' 경로로 수정
 })
 
 // Step 1: OAuth2 로그인 URL 생성
