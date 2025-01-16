@@ -168,13 +168,6 @@ io.on('connection', socket => {
 })
 
 // === OAuth2 디스코드 인증 ===
-// static 파일 제공
-app.use(express.static(path.join(__dirname, '..', 'JariGG')))
-
-// 모든 요청에 대해 index.html 리디렉션
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'JariGG', 'index.html'))
-})
 
 // Step 1: OAuth2 로그인 URL 생성
 app.get('/auth/discord', (req, res) => {
