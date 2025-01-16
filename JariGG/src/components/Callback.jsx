@@ -11,7 +11,10 @@ function Callback() {
   useEffect(() => {
     if (code) {
       axios
-        .post('http://localhost:5000/api/auth/discord/callback', { code })
+        .post(
+          `https://port-0-jariggback-m5yynzb8aef2a683.sel4.cloudtype.app/api/auth/discord/callback`,
+          { code }
+        )
         .then(response => {
           console.log('User data:', response.data)
           if (response.data.redirectTo) {
