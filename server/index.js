@@ -40,6 +40,7 @@ app.use(
   })
 )
 app.use(express.json())
+app.options('*', cors())
 
 // HTTP 서버 및 Socket.IO 설정
 const server = http.createServer(app)
