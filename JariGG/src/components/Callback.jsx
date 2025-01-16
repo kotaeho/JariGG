@@ -13,7 +13,8 @@ function Callback() {
       axios
         .post(
           `https://port-0-jariggback-m5yynzb8aef2a683.sel4.cloudtype.app/api/auth/discord/callback`,
-          { code }
+          { code },
+          { withCredentials: true }
         )
         .then(response => {
           console.log('User data:', response.data)

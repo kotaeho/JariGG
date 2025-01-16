@@ -41,7 +41,7 @@ app.use(
   })
 )
 app.use(express.json())
-app.options('*', cors())
+app.options('/api/auth/discord/callback', cors())
 
 // HTTP 서버 및 Socket.IO 설정
 const server = http.createServer(app)
@@ -180,7 +180,7 @@ app.get('/auth/discord', (req, res) => {
 })
 
 // Step 2: 디스코드 인증 콜백 처리
-app.post('/api/auth/discord/callback', async (req, res) => {
+app.post('/api/auth/discord/callback', cors(), async (req, res) => {
   const { code } = req.body
 
   if (!code) {
