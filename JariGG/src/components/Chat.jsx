@@ -21,7 +21,9 @@ function Chat() {
   }, [receivedUser])
 
   useEffect(() => {
-    const socketInstance = io('http://localhost:5000')
+    const socketInstance = io(
+      'https://port-0-jariggback-m5yynzb8aef2a683.sel4.cloudtype.app'
+    )
     setSocket(socketInstance)
 
     socketInstance.on('connect', () => {
