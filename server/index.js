@@ -34,14 +34,15 @@ let lastMessageTime = {} // 사용자별 마지막 메시지 보낸 시간 기�
 const app = express()
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
-    methods: 'GET,POST,OPTIONS',
-    allowedHeaders: 'Content-Type,Authorization',
-    credentials: true
+    origin: process.env.FRONTEND_URL, // 정확한 도메인 설정
+    methods: ['GET', 'POST', 'OPTIONS'], // 허용 메서드 지정
+    allowedHeaders: ['Content-Type', 'Authorization'], // 허용 헤더 지정
+    credentials: true // 인증 정보 포함 허용
   })
 )
+
 app.use(express.json())
-app.options('/api/auth/discord/callback', cors())
+app.options('*', cors())
 
 // HTTP 서버 및 Socket.IO 설정
 const server = http.createServer(app)
@@ -180,36 +181,45 @@ app.get('/auth/discord', (req, res) => {
 })
 
 // Step 2: 디스코드 인증 콜백 처리
-app.post('/api/auth/discord/callback', cors(), async (req, res) => {
-  const { code } = req.body
+app.post(
+  '/api/auth/discord/callback',
+  cors({ origin: process.env.FRONTEND_URL, credentials: true }),
+  async (req, res) => {
+    const { code } = req.body
 
-  if (!code) {
-    return res.status(400).send('코드가 제공되지 않았습니다.')
+    if (!code) {
+      return res.status(400).send('코드가 제공되지 않았습니다.')
+    }
+
+    try {
+      const tokenResponse = await axios.post(
+        'https://discord.com/api/oauth2/token',
+        new URLSearchParams({
+          client_id: CLIENT_ID,
+          client_secret: CLIENT_SECRET,
+          grant_type: 'authorization_code',
+          code,
+          redirect_uri: REDIRECT_URI
+        }).toString(),
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+      )
+
+      const userResponse = await axios.get(
+        'https://discord.com/api/users/@me',
+        {
+          headers: {
+            Authorization: `Bearer ${tokenResponse.data.access_token}`
+          }
+        }
+      )
+
+      res.json({ redirectTo: '/chat', user: userResponse.data })
+    } catch (error) {
+      console.error('인증 중 오류 발생:', error)
+      res.status(500).send('OAuth2 인증 실패')
+    }
   }
-
-  try {
-    const tokenResponse = await axios.post(
-      'https://discord.com/api/oauth2/token',
-      new URLSearchParams({
-        client_id: CLIENT_ID,
-        client_secret: CLIENT_SECRET,
-        grant_type: 'authorization_code',
-        code,
-        redirect_uri: REDIRECT_URI
-      }).toString(),
-      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
-    )
-
-    const userResponse = await axios.get('https://discord.com/api/users/@me', {
-      headers: { Authorization: `Bearer ${tokenResponse.data.access_token}` }
-    })
-
-    res.json({ redirectTo: '/chat', user: userResponse.data })
-  } catch (error) {
-    console.error('인증 중 오류 발생:', error)
-    res.status(500).send('OAuth2 인증 실패')
-  }
-})
+)
 
 // === 서버 시작 ===
 server.listen(PORT, () => {
