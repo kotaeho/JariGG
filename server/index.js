@@ -42,7 +42,10 @@ app.use(express.json())
 // HTTP 서버 및 Socket.IO 설정
 const server = http.createServer(app)
 const io = socketIo(server, {
-  cors: { origin: 'http://localhost:3000', methods: ['GET', 'POST'] }
+  cors: {
+    origin: 'https://web-jariggfront-m5yynzb8aef2a683.sel4.cloudtype.app/',
+    methods: ['GET', 'POST']
+  }
 })
 
 // 환경 변수 설정
