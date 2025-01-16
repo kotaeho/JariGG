@@ -49,7 +49,8 @@ const server = http.createServer(app)
 const io = socketIo(server, {
   cors: {
     origin: 'https://web-jariggfront-m5yynzb8aef2a683.sel4.cloudtype.app/',
-    methods: ['GET', 'POST']
+    methods: ['GET', 'POST'],
+    credentials: true
   }
 })
 

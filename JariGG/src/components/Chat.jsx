@@ -22,7 +22,13 @@ function Chat() {
 
   useEffect(() => {
     const socketInstance = io(
-      'https://port-0-jariggback-m5yynzb8aef2a683.sel4.cloudtype.app'
+      'https://port-0-jariggback-m5yynzb8aef2a683.sel4.cloudtype.app',
+      {
+        withCredentials: true, // 인증 정보 포함
+        extraHeaders: {
+          'Content-Type': 'application/json' // 필요한 경우 헤더 추가
+        }
+      }
     )
     setSocket(socketInstance)
 
