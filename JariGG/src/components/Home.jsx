@@ -1,6 +1,7 @@
 function Home() {
   const handleLogin = () => {
-    window.location.href = 'http://localhost:5000/auth/discord'
+    window.location.href =
+      'https://port-0-jariggback-m5yynzb8aef2a683.sel4.cloudtype.app/auth/discord'
   }
 
   return (
