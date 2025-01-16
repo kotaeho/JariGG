@@ -178,8 +178,8 @@ app.get('/auth/discord', (req, res) => {
 })
 
 // Step 2: 디스코드 인증 콜백 처리
-app.post('/api/auth/discord/callback', async (req, res) => {
-  const { code } = req.body
+app.get('/api/auth/discord/callback', async (req, res) => {
+  const { code } = req.query
 
   if (!code) {
     return res.status(400).send('코드가 제공되지 않았습니다.')

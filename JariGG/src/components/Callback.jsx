@@ -11,9 +11,9 @@ function Callback() {
   useEffect(() => {
     if (code) {
       axios
-        .post(
+        .get(
           `https://port-0-jariggback-m5yynzb8aef2a683.sel4.cloudtype.app/api/auth/discord/callback`,
-          { code }
+          { params: { code } }
         )
         .then(response => {
           console.log('User data:', response.data)
