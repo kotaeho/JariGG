@@ -34,7 +34,7 @@ let lastMessageTime = {} // 사용자별 마지막 메시지 보낸 시간 기�
 const app = express()
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL, // 정확한 도메인 설정
+    origin: 'https://web-jariggfront-m5yynzb8aef2a683.sel4.cloudtype.app', // 정확한 도메인 설정
     methods: ['GET', 'POST', 'OPTIONS'], // 허용 메서드 지정
     allowedHeaders: ['Content-Type', 'Authorization'], // 허용 헤더 지정
     credentials: true // 인증 정보 포함 허용
