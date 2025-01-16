@@ -34,7 +34,7 @@ let lastMessageTime = {} // 사용자별 마지막 메시지 보낸 시간 기�
 const app = express()
 app.use(
   cors({
-    origin: process.env.REACT_APP_FRONTEND_URL,
+    origin: process.env.FRONTEND_URL,
     methods: 'GET,POST',
     allowedHeaders: 'Content-Type'
   })
