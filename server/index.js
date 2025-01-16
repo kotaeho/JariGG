@@ -167,6 +167,12 @@ io.on('connection', socket => {
 
 // === OAuth2 디스코드 인증 ===
 
+app.use(express.static(path.join(__dirname, 'dist'))) // 'build'를 'dist'로 변경
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html')) // 여기도 'build'를 'dist'로 변경
+})
+
 // Step 1: OAuth2 로그인 URL 생성
 app.get('/auth/discord', (req, res) => {
   const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
