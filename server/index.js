@@ -12,7 +12,7 @@ dotenv.config()
 
 // MongoDB 연결
 mongoose
-  .connect('mongodb://localhost:27017/chatDB', {})
+  .connect('mongodb://svc.sel4.cloudtype.app:32325/chatDB', {})
   .then(() => console.log('MongoDB 연결 성공'))
   .catch(err => console.error('MongoDB 연결 오류:', err))
 
