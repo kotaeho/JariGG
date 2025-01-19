@@ -95,8 +95,8 @@ function Chat() {
         justifyContent: 'space-between',
         height: '100vh',
         textAlign: 'center',
-        marginLeft: isMobile ? '10px' : '400px',
-        marginRight: isMobile ? '10px' : '400px'
+        marginLeft: isMobile ? '5px' : '400px',
+        marginRight: isMobile ? '5px' : '400px'
       }}>
       <h1
         style={{
