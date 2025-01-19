@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import io from 'socket.io-client'
+import { useMediaQuery } from 'react-responsive'
 
 function Chat() {
-  const [messages, setMessages] = useState([]) // 채팅 메시지 상태
-  const [newMessage, setNewMessage] = useState('') // 새 메시지 입력 상태
-  const [socket, setSocket] = useState(null) // 소켓 연결 상태
-  const [user, setUser] = useState(null) // 디스코드 사용자 정보 상태
-  const [messageTimeout, setMessageTimeout] = useState(false) // 10분 제한 상태
-  const [waitTime, setWaitTime] = useState(0) // 남은 대기 시간
+  const [messages, setMessages] = useState([])
+  const [newMessage, setNewMessage] = useState('')
+  const [socket, setSocket] = useState(null)
+  const [user, setUser] = useState(null)
+  const [messageTimeout, setMessageTimeout] = useState(false)
+  const [waitTime, setWaitTime] = useState(0)
 
+  const navigate = useNavigate()
   const location = useLocation()
   const { user: receivedUser } = location.state || {}
+
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' }) // 모바일 화면 감지
 
   useEffect(() => {
     if (receivedUser) {
@@ -24,9 +28,9 @@ function Chat() {
     const socketInstance = io(
       'https://port-0-jariggback-m5yynzb8aef2a683.sel4.cloudtype.app',
       {
-        withCredentials: true, // 인증 정보 포함
+        withCredentials: true,
         extraHeaders: {
-          'Content-Type': 'application/json' // 필요한 경우 헤더 추가
+          'Content-Type': 'application/json'
         }
       }
     )
@@ -91,18 +95,25 @@ function Chat() {
         justifyContent: 'space-between',
         height: '100vh',
         textAlign: 'center',
-        marginLeft: '400px',
-        marginRight: '400px'
+        marginLeft: isMobile ? '10px' : '400px',
+        marginRight: isMobile ? '10px' : '400px'
       }}>
-      <h1>자리지지</h1>
+      <h1
+        style={{
+          cursor: 'pointer',
+          color: 'blue',
+          textDecoration: 'underline'
+        }}
+        onClick={() => navigate('/')}>
+        자리지지
+      </h1>
 
-      {/* 메시지 리스트 부분 */}
       <div
         style={{
           flexGrow: 1,
           overflowY: 'auto',
           paddingBottom: '10px',
-          textAlign: 'left' // 메시지를 왼쪽 정렬
+          textAlign: 'left'
         }}>
         <ul style={{ listStyleType: 'none', padding: 0 }}>
           {messages.map((msg, index) => (

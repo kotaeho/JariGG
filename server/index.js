@@ -6,7 +6,6 @@ const dotenv = require('dotenv')
 const http = require('http')
 const socketIo = require('socket.io')
 const mongoose = require('mongoose')
-const path = require('path')
 
 dotenv.config()
 
